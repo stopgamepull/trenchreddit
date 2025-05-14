@@ -1,0 +1,556 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="images/image.png" type="image/png">
+    <title>Trenchddit</title>
+    <style>
+        :root {
+            --orange: #FF5700;
+            --light-gray: #DAE0E6;
+            --dark-gray: #1A1A1B;
+            --text-gray: #787C7E;
+            --blue: #0079D3;
+            --hover-gray: #F6F7F8;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            line-height: 1.4;
+        }
+        
+        header {
+            background-color: white;
+            padding: 10px 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            color: var(--orange);
+            font-weight: bold;
+            font-size: 24px;
+            text-decoration: none;
+        }
+        
+        .container {
+            display: flex;
+            max-width: 1000px;
+            margin: 20px auto;
+            gap: 24px;
+        }
+        
+        .main-content {
+            flex: 1;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+        }
+        
+        .sidebar {
+            width: 312px;
+        }
+        
+        .community-card {
+            background: white;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            border: 1px solid #ccc;
+        }
+        
+        .community-header {
+            background-color: var(--orange);
+            color: white;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .community-list {
+            padding: 12px;
+        }
+        
+        .community-list a {
+            display: block;
+            padding: 8px 0;
+            color: var(--dark-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .community-list a:hover {
+            color: var(--blue);
+        }
+        
+        .sort-options {
+            display: flex;
+            padding: 10px;
+            background: white;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .sort-btn {
+            background: none;
+            border: none;
+            padding: 6px 12px;
+            margin-right: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--text-gray);
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        .sort-btn.active {
+            background: var(--light-gray);
+            color: var(--dark-gray);
+        }
+        
+        .sort-btn:hover {
+            background: var(--hover-gray);
+        }
+        
+        .post {
+            display: flex;
+            padding: 16px;
+            border-bottom: 1px solid var(--light-gray);
+            transition: background 0.2s;
+        }
+        
+        .post:hover {
+            background: var(--hover-gray);
+        }
+        
+        .vote {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 8px;
+            color: var(--text-gray);
+            min-width: 40px;
+        }
+        
+        .vote-btn {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 2px;
+        }
+        
+        .vote-btn:hover {
+            color: var(--orange);
+        }
+        
+        .vote-count {
+            font-size: 12px;
+            font-weight: bold;
+            margin: 4px 0;
+        }
+        
+        .post-content {
+            flex: 1;
+        }
+        
+        .post-title {
+            font-size: 18px;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-gray);
+            text-decoration: none;
+            display: block;
+        }
+        
+        .post-title:hover {
+            color: var(--blue);
+        }
+        
+        .post-meta {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+        
+        .post-meta a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .post-meta a:hover {
+            text-decoration: underline;
+        }
+        
+        .comments {
+            padding: 16px;
+        }
+        
+        .comments-title {
+            font-size: 18px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .comment-form {
+            margin-bottom: 24px;
+        }
+        
+        .comment-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+            margin-bottom: 8px;
+        }
+        
+        .comment-submit {
+            background: var(--orange);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .comment-submit:hover {
+            background: #E04E00;
+        }
+        
+        .comment {
+            margin: 12px 0;
+            padding-left: 16px;
+            border-left: 2px solid var(--light-gray);
+        }
+        
+        .comment-meta {
+            font-size: 12px;
+            color: var(--text-gray);
+            margin-bottom: 4px;
+        }
+        
+        .comment-text {
+            margin-bottom: 8px;
+        }
+        
+        .comment-actions {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+        
+        .comment-actions a {
+            color: var(--text-gray);
+            text-decoration: none;
+            margin-right: 8px;
+            font-weight: 500;
+        }
+        
+        .comment-actions a:hover {
+            text-decoration: underline;
+        }
+        
+        .current-community {
+            font-size: 14px;
+            font-weight: bold;
+            padding: 16px;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+        }
+        
+        .community-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--orange);
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .create-post {
+            padding: 16px;
+            border-bottom: 1px solid var(--light-gray);
+            background: var(--hover-gray);
+        }
+        
+        .create-post-text {
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 8px 16px;
+            color: var(--text-gray);
+            cursor: pointer;
+        }
+        
+        .create-post-text:hover {
+            background: #f0f0f0;
+        }
+        
+        .no-posts {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-gray);
+        }
+        
+        .post-form {
+            padding: 16px;
+        }
+        
+        .post-form input, .post-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .post-form textarea {
+            min-height: 150px;
+        }
+        
+        .post-form button {
+            background: var(--orange);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .icon-block {
+            position: absolute;
+            bottom: 10px;
+            right: 50px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .icon-link {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: transform 0.3s;
+        }
+        
+        .icon-link:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.php" class="logo">Trenchddit</a>
+        <div class="user-info">Id: <span id="current-username">Trencher8142</span></div>
+    </header>
+    <div class="icon-block">
+        <a href="https://x.com/Trenchddit" class="icon-link" style="background-image: url('images/icons2.png');"></a>
+        <a href="https://t.me/Trenchddit" class="icon-link" style="background-image: url('images/123.png');"></a>
+    </div>
+    
+    <div class="container">
+        <div class="main-content">
+            <div class="current-community">
+                <div class="community-icon"></div>
+                <span id="current-community-name">r/memecoins</span>
+            </div>
+            
+            <div class="sort-options">
+                <button class="sort-btn active">Hot</button>
+                <button class="sort-btn">New</button>
+                <button class="sort-btn">Top</button>
+                <button class="sort-btn" id="create-post-btn">Create Post</button>
+            </div>
+            
+                            <div id="posts-container">
+                                                                        <div class="post">
+                                <div class="vote">
+                                    <form method="POST" action="index.php?community=memecoins">
+                                        <input type="hidden" name="post_id" value="9">
+                                        <button type="submit" name="vote_post" value="up" class="vote-btn">▲</button>
+                                        <div class="vote-count">0</div>
+                                        <button type="submit" name="vote_post" value="down" class="vote-btn">▼</button>
+                                    </form>
+                                </div>
+                                <div class="post-content">
+                                    <a href="index.php?community=memecoins&post_id=9" class="post-title">sdg</a>
+                                    <div class="post-meta">Posted by Trencher7031 • just now • 0 comments</div>
+                                                                            <div class="post-text" style="margin-top: 10px; font-size: 14px; color: var(--text-gray);">lul</div>
+                                                                    </div>
+                            </div>
+                                                    <div class="post">
+                                <div class="vote">
+                                    <form method="POST" action="index.php?community=memecoins">
+                                        <input type="hidden" name="post_id" value="8">
+                                        <button type="submit" name="vote_post" value="up" class="vote-btn">▲</button>
+                                        <div class="vote-count">0</div>
+                                        <button type="submit" name="vote_post" value="down" class="vote-btn">▼</button>
+                                    </form>
+                                </div>
+                                <div class="post-content">
+                                    <a href="index.php?community=memecoins&post_id=8" class="post-title">sdg</a>
+                                    <div class="post-meta">Posted by Trencher7031 • just now • 0 comments</div>
+                                                                            <div class="post-text" style="margin-top: 10px; font-size: 14px; color: var(--text-gray);">lul</div>
+                                                                    </div>
+                            </div>
+                                                    <div class="post">
+                                <div class="vote">
+                                    <form method="POST" action="index.php?community=memecoins">
+                                        <input type="hidden" name="post_id" value="7">
+                                        <button type="submit" name="vote_post" value="up" class="vote-btn">▲</button>
+                                        <div class="vote-count">0</div>
+                                        <button type="submit" name="vote_post" value="down" class="vote-btn">▼</button>
+                                    </form>
+                                </div>
+                                <div class="post-content">
+                                    <a href="index.php?community=memecoins&post_id=7" class="post-title">sdg</a>
+                                    <div class="post-meta">Posted by Trencher7031 • just now • 0 comments</div>
+                                                                            <div class="post-text" style="margin-top: 10px; font-size: 14px; color: var(--text-gray);">lul</div>
+                                                                    </div>
+                            </div>
+                                                    <div class="post">
+                                <div class="vote">
+                                    <form method="POST" action="index.php?community=memecoins">
+                                        <input type="hidden" name="post_id" value="6">
+                                        <button type="submit" name="vote_post" value="up" class="vote-btn">▲</button>
+                                        <div class="vote-count">0</div>
+                                        <button type="submit" name="vote_post" value="down" class="vote-btn">▼</button>
+                                    </form>
+                                </div>
+                                <div class="post-content">
+                                    <a href="index.php?community=memecoins&post_id=6" class="post-title">sdg</a>
+                                    <div class="post-meta">Posted by Trencher7031 • just now • 0 comments</div>
+                                                                            <div class="post-text" style="margin-top: 10px; font-size: 14px; color: var(--text-gray);">lul</div>
+                                                                    </div>
+                            </div>
+                                                    <div class="post">
+                                <div class="vote">
+                                    <form method="POST" action="index.php?community=memecoins">
+                                        <input type="hidden" name="post_id" value="5">
+                                        <button type="submit" name="vote_post" value="up" class="vote-btn">▲</button>
+                                        <div class="vote-count">-1</div>
+                                        <button type="submit" name="vote_post" value="down" class="vote-btn">▼</button>
+                                    </form>
+                                </div>
+                                <div class="post-content">
+                                    <a href="index.php?community=memecoins&post_id=5" class="post-title">pump sol pls</a>
+                                    <div class="post-meta">Posted by Trencher4825 • just now • 0 comments</div>
+                                                                    </div>
+                            </div>
+                                                    <div class="post">
+                                <div class="vote">
+                                    <form method="POST" action="index.php?community=memecoins">
+                                        <input type="hidden" name="post_id" value="4">
+                                        <button type="submit" name="vote_post" value="up" class="vote-btn">▲</button>
+                                        <div class="vote-count">0</div>
+                                        <button type="submit" name="vote_post" value="down" class="vote-btn">▼</button>
+                                    </form>
+                                </div>
+                                <div class="post-content">
+                                    <a href="index.php?community=memecoins&post_id=4" class="post-title">FUCK TRUMP</a>
+                                    <div class="post-meta">Posted by Trencher6493 • just now • 1 comments</div>
+                                                                            <div class="post-text" style="margin-top: 10px; font-size: 14px; color: var(--text-gray);">FUCKING LIAR</div>
+                                                                    </div>
+                            </div>
+                                                    <div class="post">
+                                <div class="vote">
+                                    <form method="POST" action="index.php?community=memecoins">
+                                        <input type="hidden" name="post_id" value="3">
+                                        <button type="submit" name="vote_post" value="up" class="vote-btn">▲</button>
+                                        <div class="vote-count">-4</div>
+                                        <button type="submit" name="vote_post" value="down" class="vote-btn">▼</button>
+                                    </form>
+                                </div>
+                                <div class="post-content">
+                                    <a href="index.php?community=memecoins&post_id=3" class="post-title">FUCK TRUMP</a>
+                                    <div class="post-meta">Posted by Trencher6493 • just now • 0 comments</div>
+                                                                            <div class="post-text" style="margin-top: 10px; font-size: 14px; color: var(--text-gray);">FUCKING LIAR</div>
+                                                                    </div>
+                            </div>
+                                                    <div class="post">
+                                <div class="vote">
+                                    <form method="POST" action="index.php?community=memecoins">
+                                        <input type="hidden" name="post_id" value="2">
+                                        <button type="submit" name="vote_post" value="up" class="vote-btn">▲</button>
+                                        <div class="vote-count">0</div>
+                                        <button type="submit" name="vote_post" value="down" class="vote-btn">▼</button>
+                                    </form>
+                                </div>
+                                <div class="post-content">
+                                    <a href="index.php?community=memecoins&post_id=2" class="post-title">FUCK TRUMP</a>
+                                    <div class="post-meta">Posted by Trencher6493 • just now • 0 comments</div>
+                                                                            <div class="post-text" style="margin-top: 10px; font-size: 14px; color: var(--text-gray);">FUCKING LIAR</div>
+                                                                    </div>
+                            </div>
+                                                            </div>
+                    </div>
+        
+        <div class="sidebar">
+            <div class="community-card">
+                <div class="community-header">Communities</div>
+                <div class="community-list">
+                                            <a href="index.php?community=memecoins">r/memecoins</a>
+                                            <a href="index.php?community=SOL">r/SOL</a>
+                                    </div>
+            </div>
+            
+            <div class="community-card">
+                <div class="community-header">About Trenchddit</div>
+                <div class="community-list">
+                    <p style="font-size: 13px; color: var(--text-gray); margin: 0;">Anonymous discussion forum. All users get random TrencherXXXX names. Posts and comments are saved in the database.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Handle create post button
+        document.getElementById('create-post-btn').addEventListener('click', function() {
+            window.location.href = 'index.php?community=memecoins&create_post=1';
+        });
+        
+        // Handle reply buttons
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('reply-btn')) {
+                e.preventDefault();
+                const commentId = e.target.dataset.commentId;
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'index.php?community=memecoins&post_id=';
+                form.innerHTML = `
+                    <input type="hidden" name="post_id" value="">
+                    <input type="hidden" name="parent_id" value="${commentId}">
+                    <textarea class="comment-textarea" name="comment_content" placeholder="Write your reply..." required style="margin-top: 10px;"></textarea>
+                    <button type="submit" name="add_comment" class="comment-submit">Reply</button>
+                `;
+                e.target.parentElement.parentElement.appendChild(form);
+                e.target.style.display = 'none';
+            }
+        });
+    </script>
+
+</body></html>
